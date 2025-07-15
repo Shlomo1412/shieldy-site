@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shieldy - Beautiful Shield Badge Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-sun sun-icon"></i>
+                <i class="fas fa-moon moon-icon"></i>
+                <span class="theme-text">Dark</span>
+            </div>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>Shieldy</h1>
+                </div>
+                <p class="subtitle">Create beautiful shield badges in seconds</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Preview Section -->
+            <section class="preview-section">
+                <div class="preview-container">
+                    <h2>Preview</h2>
+                    <div class="badge-preview">
+                        <img id="badge-image" src="" alt="Badge Preview" />
+                        <div class="preview-placeholder" id="preview-placeholder">
+                            <i class="fas fa-eye"></i>
+                            <p>Your badge will appear here</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Export Options -->
+                    <div class="export-section">
+                        <h3>Export</h3>
+                        <div class="export-buttons">
+                            <button class="btn btn-primary" id="copy-markdown">
+                                <i class="fab fa-markdown"></i> Copy Markdown
+                            </button>
+                            <button class="btn btn-secondary" id="copy-html">
+                                <i class="fas fa-code"></i> Copy HTML
+                            </button>
+                            <button class="btn btn-secondary" id="copy-url">
+                                <i class="fas fa-link"></i> Copy URL
+                            </button>
+                            <button class="btn btn-secondary" id="download-svg">
+                                <i class="fas fa-download"></i> Download SVG
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Favorites Section -->
+                    <div class="favorites-section">
+                        <div class="favorites-header">
+                            <h4>
+                                <i class="fas fa-heart"></i>
+                                Favorite Badges
+                            </h4>
+                            <div class="favorites-actions">
+                                <button class="btn btn-secondary" id="save-favorite" title="Save current badge as favorite">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="btn btn-secondary" id="clear-favorites" title="Clear all favorites">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="favorites-list" id="favorites-list">
+                            <div class="empty-favorites">
+                                <i class="fas fa-heart-broken"></i>
+                                <p>No favorites saved yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-section">
+                <div class="controls-container">
+                    <!-- Badge Type Selection -->
+                    <div class="section">
+                        <h3>Badge Type</h3>
+                        <div class="badge-type-tabs">
+                            <button class="tab-btn active" data-type="static">
+                                <i class="fas fa-edit"></i> Static Badge
+                            </button>
+                            <button class="tab-btn" data-type="dynamic">
+                                <i class="fas fa-sync-alt"></i> Dynamic Badge
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Templates -->
+                    <div class="section templates-section">
+                        <div class="section-header" onclick="toggleTemplates()">
+                            <h3>
+                                <i class="fas fa-chevron-down template-toggle" id="template-toggle"></i>
+                                Quick Templates
+                            </h3>
+                        </div>
+                        <div class="template-content" id="template-content">
+                            <!-- Static Templates -->
+                            <div class="template-category static-section" id="static-templates">
+                                <h4>Static Badge Templates</h4>
+                                <div class="templates">
+                                    <button class="template-btn" data-template="build-passing">
+                                        <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build Passing">
+                                    </button>
+                                    <button class="template-btn" data-template="version">
+                                        <img src="https://img.shields.io/badge/version-1.0.0-blue" alt="Version">
+                                    </button>
+                                    <button class="template-btn" data-template="license">
+                                        <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+                                    </button>
+                                    <button class="template-btn" data-template="coverage">
+                                        <img src="https://img.shields.io/badge/coverage-95%25-brightgreen" alt="Coverage">
+                                    </button>
+                                    <button class="template-btn" data-template="docs">
+                                        <img src="https://img.shields.io/badge/docs-latest-blue" alt="Docs">
+                                    </button>
+                                    <button class="template-btn" data-template="status">
+                                        <img src="https://img.shields.io/badge/status-active-success" alt="Status">
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Dynamic Templates -->
+                            <div class="template-category dynamic-section" id="dynamic-templates">
+                                <h4>Dynamic Badge Templates</h4>
+                                <div class="templates">
+                                    <button class="template-btn dynamic-template" data-service="github/stars" data-params='{"user":"microsoft","repo":"vscode"}'>
+                                        <img src="https://img.shields.io/github/stars/microsoft/vscode" alt="GitHub Stars">
+                                    </button>
+                                    <button class="template-btn dynamic-template" data-service="npm/v" data-params='{"package":"react"}'>
+                                        <img src="https://img.shields.io/npm/v/react" alt="NPM Version">
+                                    </button>
+                                    <button class="template-btn dynamic-template" data-service="github/followers" data-params='{"user":"torvalds"}'>
+                                        <img src="https://img.shields.io/github/followers/torvalds" alt="GitHub Followers">
+                                    </button>
+                                    <button class="template-btn dynamic-template" data-service="npm/dt" data-params='{"package":"lodash"}'>
+                                        <img src="https://img.shields.io/npm/dt/lodash" alt="NPM Downloads">
+                                    </button>
+                                    <button class="template-btn dynamic-template" data-service="docker/pulls" data-params='{"image":"node"}'>
+                                        <img src="https://img.shields.io/docker/pulls/node" alt="Docker Pulls">
+                                    </button>
+                                    <button class="template-btn dynamic-template" data-service="github/license" data-params='{"user":"facebook","repo":"react"}'>
+                                        <img src="https://img.shields.io/github/license/facebook/react" alt="GitHub License">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Badge Options -->
+                    <div class="section dynamic-section" id="dynamic-options">
+                        <h3>Dynamic Badge Service</h3>
+                        <div class="form-group">
+                            <label for="dynamic-service">Service</label>
+                            <select id="dynamic-service">
+                                <option value="">Select a service...</option>
+                                <optgroup label="GitHub">
+                                    <option value="github/followers">GitHub Followers</option>
+                                    <option value="github/stars">GitHub Stars</option>
+                                    <option value="github/forks">GitHub Forks</option>
+                                    <option value="github/watchers">GitHub Watchers</option>
+                                    <option value="github/issues">GitHub Issues</option>
+                                    <option value="github/issues-pr">GitHub Pull Requests</option>
+                                    <option value="github/release">GitHub Release</option>
+                                    <option value="github/tag">GitHub Tag</option>
+                                    <option value="github/commits-since">GitHub Commits Since</option>
+                                    <option value="github/last-commit">GitHub Last Commit</option>
+                                    <option value="github/license">GitHub License</option>
+                                    <option value="github/languages/top">GitHub Top Language</option>
+                                    <option value="github/repo-size">GitHub Repo Size</option>
+                                    <option value="github/downloads">GitHub Downloads</option>
+                                </optgroup>
+                                <optgroup label="NPM">
+                                    <option value="npm/v">NPM Version</option>
+                                    <option value="npm/dt">NPM Downloads Total</option>
+                                    <option value="npm/dm">NPM Downloads Monthly</option>
+                                    <option value="npm/dw">NPM Downloads Weekly</option>
+                                    <option value="npm/dy">NPM Downloads Yearly</option>
+                                    <option value="npm/l">NPM License</option>
+                                    <option value="npm/node">NPM Node Version</option>
+                                    <option value="npm/types">NPM Types</option>
+                                </optgroup>
+                                <optgroup label="PyPI">
+                                    <option value="pypi/v">PyPI Version</option>
+                                    <option value="pypi/dm">PyPI Downloads Monthly</option>
+                                    <option value="pypi/dw">PyPI Downloads Weekly</option>
+                                    <option value="pypi/dd">PyPI Downloads Daily</option>
+                                    <option value="pypi/l">PyPI License</option>
+                                    <option value="pypi/pyversions">PyPI Python Versions</option>
+                                    <option value="pypi/status">PyPI Status</option>
+                                    <option value="pypi/wheel">PyPI Wheel</option>
+                                </optgroup>
+                                <optgroup label="Docker">
+                                    <option value="docker/pulls">Docker Pulls</option>
+                                    <option value="docker/stars">Docker Stars</option>
+                                    <option value="docker/automated">Docker Automated</option>
+                                    <option value="docker/build">Docker Build</option>
+                                </optgroup>
+                                <optgroup label="Social">
+                                    <option value="twitter/follow">Twitter Follow</option>
+                                    <option value="reddit/subreddit-subscribers">Reddit Subscribers</option>
+                                    <option value="youtube/channel/subscribers">YouTube Subscribers</option>
+                                    <option value="youtube/channel/views">YouTube Views</option>
+                                    <option value="discord">Discord</option>
+                                </optgroup>
+                                <optgroup label="CI/CD">
+                                    <option value="travis">Travis CI</option>
+                                    <option value="circleci/build">CircleCI</option>
+                                    <option value="appveyor/ci">AppVeyor</option>
+                                    <option value="gitlab/pipeline">GitLab Pipeline</option>
+                                    <option value="github/workflow/status">GitHub Actions</option>
+                                </optgroup>
+                                <optgroup label="Code Quality">
+                                    <option value="codecov/c">Codecov</option>
+                                    <option value="coveralls">Coveralls</option>
+                                    <option value="codeclimate/maintainability">Code Climate Maintainability</option>
+                                    <option value="codeclimate/tech-debt">Code Climate Tech Debt</option>
+                                    <option value="scrutinizer/g">Scrutinizer</option>
+                                    <option value="sonar/quality_gate">SonarQube Quality Gate</option>
+                                </optgroup>
+                                <optgroup label="Security">
+                                    <option value="snyk/vulnerabilities">Snyk Vulnerabilities</option>
+                                    <option value="librariesio/dependents">Libraries.io Dependents</option>
+                                </optgroup>
+                                <optgroup label="Other">
+                                    <option value="badge/dynamic/json">Custom JSON API</option>
+                                    <option value="badge/dynamic/xml">Custom XML API</option>
+                                    <option value="badge/dynamic/yaml">Custom YAML API</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="dynamic-params" id="dynamic-params">
+                            <!-- Dynamic parameters will be inserted here -->
+                        </div>
+
+                        <div class="dynamic-examples" id="dynamic-examples">
+                            <!-- Examples will be shown here -->
+                        </div>
+                    </div>
+
+                    <!-- Badge Content -->
+                    <div class="section static-section" id="static-content">
+                        <h3>Badge Content</h3>
+                        <div class="form-group">
+                            <label for="label-text">Label</label>
+                            <input type="text" id="label-text" placeholder="build" value="build">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text">Message</label>
+                            <input type="text" id="message-text" placeholder="passing" value="passing">
+                        </div>
+                        <div class="form-group">
+                            <label for="link-url">Link URL (optional)</label>
+                            <input type="url" id="link-url" placeholder="https://example.com">
+                        </div>
+                    </div>
+
+                    <!-- Colors -->
+                    <div class="section">
+                        <h3>Colors</h3>
+                        <div class="color-controls">
+                            <div class="form-group">
+                                <label for="label-color">Label Color</label>
+                                <div class="color-input-group">
+                                    <input type="color" id="label-color" value="#555555">
+                                    <input type="text" id="label-color-text" value="555" placeholder="555">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-color">Message Color</label>
+                                <div class="color-input-group">
+                                    <input type="color" id="message-color" value="#4c1">
+                                    <input type="text" id="message-color-text" value="brightgreen" placeholder="brightgreen">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="color-presets">
+                            <h4>Color Presets</h4>
+                            <div class="preset-colors">
+                                <button class="color-preset" data-color="brightgreen" style="background-color: #4c1;"></button>
+                                <button class="color-preset" data-color="green" style="background-color: #4c1;"></button>
+                                <button class="color-preset" data-color="yellow" style="background-color: #dfb317;"></button>
+                                <button class="color-preset" data-color="orange" style="background-color: #fe7d37;"></button>
+                                <button class="color-preset" data-color="red" style="background-color: #e05d44;"></button>
+                                <button class="color-preset" data-color="blue" style="background-color: #007ec6;"></button>
+                                <button class="color-preset" data-color="lightgrey" style="background-color: #9f9f9f;"></button>
+                                <button class="color-preset" data-color="success" style="background-color: #4c1;"></button>
+                                <button class="color-preset" data-color="important" style="background-color: #fe7d37;"></button>
+                                <button class="color-preset" data-color="critical" style="background-color: #e05d44;"></button>
+                                <button class="color-preset" data-color="informational" style="background-color: #007ec6;"></button>
+                                <button class="color-preset" data-color="inactive" style="background-color: #9f9f9f;"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Style Options -->
+                    <div class="section">
+                        <h3>Style</h3>
+                        <div class="style-options">
+                            <div class="form-group">
+                                <label for="badge-style">Badge Style</label>
+                                <select id="badge-style">
+                                    <option value="flat">Flat</option>
+                                    <option value="flat-square">Flat Square</option>
+                                    <option value="plastic">Plastic</option>
+                                    <option value="for-the-badge">For The Badge</option>
+                                    <option value="social">Social</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="logo-option">Logo (optional)</label>
+                                <div class="logo-input-group">
+                                    <input type="text" id="logo-option" placeholder="github, npm, docker...">
+                                    <button type="button" class="btn btn-secondary icon-selector-btn" id="open-icon-selector">
+                                        <i class="fas fa-icons"></i> Browse Icons
+                                    </button>
+                                </div>
+                                
+                                <!-- Custom Logo Upload -->
+                                <div class="logo-upload-section">
+                                    <div class="upload-area" id="logo-upload-area">
+                                        <input type="file" id="logo-file-input" accept="image/*" style="display: none;">
+                                        <div class="upload-content">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Click or drag to upload custom logo</p>
+                                            <p class="upload-hint">SVG, PNG, JPG (max 2MB)</p>
+                                        </div>
+                                    </div>
+                                    <div class="uploaded-logo" id="uploaded-logo" style="display: none;">
+                                        <img id="uploaded-logo-preview" src="" alt="Uploaded logo">
+                                        <div class="uploaded-logo-info">
+                                            <div class="uploaded-logo-name" id="uploaded-logo-name"></div>
+                                            <div class="uploaded-logo-size" id="uploaded-logo-size"></div>
+                                        </div>
+                                        <button type="button" class="remove-logo" id="remove-uploaded-logo">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="logo-color">Logo Color</label>
+                                <input type="text" id="logo-color" placeholder="white">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options -->
+                    <div class="section">
+                        <h3>Advanced Options</h3>
+                        <div class="advanced-options">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="cache-seconds">
+                                    <span class="checkmark"></span>
+                                    Custom Cache Seconds
+                                </label>
+                                <input type="number" id="cache-value" placeholder="300" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <div class="generate-section">
+                        <button class="btn btn-large btn-primary" id="generate-badge">
+                            <i class="fas fa-magic"></i> Generate Badge
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Shieldy. Powered by <a href="https://shields.io" target="_blank">Shields.io</a></p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">Copied to clipboard!</span>
+        </div>
+    </div>
+
+    <!-- Icon Selector Modal -->
+    <div class="modal-overlay" id="icon-modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-icons"></i> Select Icon</h3>
+                <button class="modal-close" id="close-icon-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="icon-search">
+                    <input type="text" id="icon-search-input" placeholder="Search icons..." class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="icon-categories">
+                    <button class="category-btn active" data-category="popular">Popular</button>
+                    <button class="category-btn" data-category="tech">Tech</button>
+                    <button class="category-btn" data-category="social">Social</button>
+                    <button class="category-btn" data-category="tools">Tools</button>
+                    <button class="category-btn" data-category="brands">Brands</button>
+                </div>
+                <div class="icon-grid" id="icon-grid">
+                    <!-- Icons will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="clear-icon">Clear Icon</button>
+                <button class="btn btn-primary" id="apply-icon" disabled>Apply Selected Icon</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
