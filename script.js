@@ -462,6 +462,14 @@ class ShieldyBadgeGenerator {
             case 'npm/types':
                 return `${baseUrl}npm/types/${paramValues.package}`;
 
+            // NuGet services
+            case 'nuget/v':
+                return `${baseUrl}nuget/v/${paramValues.package}`;
+            case 'nuget/dt':
+                return `${baseUrl}nuget/dt/${paramValues.package}`;
+            case 'nuget/vpre':
+                return `${baseUrl}nuget/vpre/${paramValues.package}`;
+
             // PyPI services
             case 'pypi/v':
                 return `${baseUrl}pypi/v/${paramValues.package}`;
@@ -754,6 +762,29 @@ class ShieldyBadgeGenerator {
                     { name: 'package', label: 'Package Name', placeholder: 'react', required: true }
                 ],
                 example: 'https://img.shields.io/npm/types/react'
+            },
+
+            // NuGet services
+            'nuget/v': {
+                name: 'NuGet Version',
+                params: [
+                    { name: 'package', label: 'Package Name', placeholder: 'Newtonsoft.Json', required: true, description: 'NuGet package name' }
+                ],
+                example: 'https://img.shields.io/nuget/v/Newtonsoft.Json'
+            },
+            'nuget/dt': {
+                name: 'NuGet Downloads Total',
+                params: [
+                    { name: 'package', label: 'Package Name', placeholder: 'EntityFramework', required: true }
+                ],
+                example: 'https://img.shields.io/nuget/dt/EntityFramework'
+            },
+            'nuget/vpre': {
+                name: 'NuGet Version (Prerelease)',
+                params: [
+                    { name: 'package', label: 'Package Name', placeholder: 'Microsoft.AspNetCore', required: true }
+                ],
+                example: 'https://img.shields.io/nuget/vpre/Microsoft.AspNetCore'
             },
 
             // PyPI services
